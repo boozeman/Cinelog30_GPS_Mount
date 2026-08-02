@@ -154,23 +154,18 @@ def create_back_wall(cfg):
 def assemble(cfg):
     print("Assembling cradle")
 
-    parts = [
+    shape = fuse_all([
 
-        create_floor(cfg),
-
-        create_left_wall(cfg),
-
-        create_right_wall(cfg),
-
-        create_front_wall(cfg),
-
-        #create_back_wall(cfg),
+        create_base(cfg),
 
         create_left(cfg),
 
         create_right(cfg),
 
-    ]
+        create_front(cfg),
+
+    ])
+    
     print(f"Parts: {len(parts)}")
     return fuse_all(parts)
 
