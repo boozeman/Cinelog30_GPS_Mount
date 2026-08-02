@@ -1,188 +1,83 @@
 ﻿"""
-GPS Cradle Builder V1.0
+GPS Cradle Builder
 
-Stage 1:
-- Floor
-- Four walls
+Main assembly for the GPS cradle.
 
-No rails yet.
+This module contains no geometry itself.
+Geometry is created in the dedicated modules:
+
+    base.py
+    walls.py
+    connector.py
 """
 
 from __future__ import annotations
 
 from Mount.Utils.geometry import (
-    box,
-    move,
     fuse_all,
     feature,
 )
 
-from Mount.GPSCradle.rail import (
-    create_left,
-    create_right,
-)
+from Mount.GPSCradle import base
+from Mount.GPSCradle import walls
+from Mount.GPSCradle import connector
+
+
 print("builder.py loaded")
-
-# --------------------------------------------------
-# Base dimensions
-# --------------------------------------------------
-
-
-def outer_width(cfg):
-    return cfg.gps_width + 2 * cfg.wall
-
-
-def outer_length(cfg):
-    return cfg.gps_length + 2 * cfg.wall
-
-
-def outer_height(cfg):
-    return cfg.gps_height + cfg.wall
-
-
-# --------------------------------------------------
-# Floor
-# --------------------------------------------------
-
-
-def create_floor(cfg):
-
-    return box(
-        outer_width(cfg),
-        outer_length(cfg),
-        cfg.wall,
-    )
-
-
-# --------------------------------------------------
-# Left wall
-# --------------------------------------------------
-
-
-def create_left_wall(cfg):
-
-    wall = box(
-        cfg.wall,
-        outer_length(cfg),
-        cfg.gps_height,
-    )
-
-    move(
-        wall,
-        0,
-        0,
-        cfg.wall,
-    )
-
-    return wall
-
-
-# --------------------------------------------------
-# Right wall
-# --------------------------------------------------
-
-
-def create_right_wall(cfg):
-
-    wall = box(
-        cfg.wall,
-        outer_length(cfg),
-        cfg.gps_height,
-    )
-
-    move(
-        wall,
-        outer_width(cfg) - cfg.wall,
-        0,
-        cfg.wall,
-    )
-
-    return wall
-
-
-# --------------------------------------------------
-# Front wall
-# --------------------------------------------------
-
-
-def create_front_wall(cfg):
-
-    wall = box(
-        outer_width(cfg),
-        cfg.wall,
-        cfg.gps_height,
-    )
-
-    move(
-        wall,
-        0,
-        0,
-        cfg.wall,
-    )
-
-    return wall
-
-
-# --------------------------------------------------
-# Rear wall
-# --------------------------------------------------
-
-
-def create_back_wall(cfg):
-
-    wall = box(
-        outer_width(cfg),
-        cfg.wall,
-        cfg.gps_height,
-    )
-
-    move(
-        wall,
-        0,
-        outer_length(cfg) - cfg.wall,
-        cfg.wall,
-    )
-
-    return wall
 
 
 # --------------------------------------------------
 # Assemble
 # --------------------------------------------------
 
-
 def assemble(cfg):
+    """
+    Assemble complete GPS cradle.
+    """
+
     print("Assembling cradle")
 
-    shape = fuse_all([
+    parts = [
 
-        create_base(cfg),
+        base.create(cfg),
 
-        create_left(cfg),
+        walls.create_left(cfg),
 
-        create_right(cfg),
+        walls.create_right(cfg),
 
-        create_front(cfg),
+        walls.create_front(cfg),
 
-    ])
-    
-    print(f"Parts: {len(parts)}")
-    return fuse_all(parts)
+    ]
+
+    print(f"Fusing {len(parts)} parts")
+
+    shape = fuse_all(parts)
+
+    #
+    # Boolean cuts
+    #
+
+    shape = connector.cut_connector(shape, cfg)
+    shape = connector.cut_cable(shape, cfg)
+
+    return shape
 
 
 # --------------------------------------------------
 # Builder
 # --------------------------------------------------
 
-
 def create(doc, parent, cfg):
+    """
+    Create GPS cradle feature.
+    """
 
-    print("Creating GPS cradle V1.0")
+    print("Creating GPS cradle")
 
     shape = assemble(cfg)
 
-    print("Valid :", shape.isValid())
-    print("Volume:", shape.Volume)
+    print(f"Valid : {shape.isValid()}")
+    print(f"Volume: {shape.Volume:.2f}")
 
     return feature(
         doc,

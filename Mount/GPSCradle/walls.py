@@ -1,7 +1,5 @@
 ﻿"""
 GPS cradle walls.
-
-Creates the left, right and front walls.
 """
 
 from __future__ import annotations
@@ -12,16 +10,22 @@ from Mount.Utils.geometry import (
 )
 
 
+def _outer_width(cfg):
+    return cfg.gps_width + 2 * cfg.wall
+
+
+def _outer_length(cfg):
+    return cfg.gps_length + 2 * cfg.wall
+
+
 def create_left(cfg):
     """
-    Left side wall.
+    Left wall.
     """
-
-    outer_length = cfg.gps_length + 2 * cfg.wall
 
     wall = box(
         cfg.wall,
-        outer_length,
+        _outer_length(cfg),
         cfg.gps_height,
     )
 
@@ -37,21 +41,18 @@ def create_left(cfg):
 
 def create_right(cfg):
     """
-    Right side wall.
+    Right wall.
     """
-
-    outer_width = cfg.gps_width + 2 * cfg.wall
-    outer_length = cfg.gps_length + 2 * cfg.wall
 
     wall = box(
         cfg.wall,
-        outer_length,
+        _outer_length(cfg),
         cfg.gps_height,
     )
 
     move(
         wall,
-        outer_width - cfg.wall,
+        _outer_width(cfg) - cfg.wall,
         0,
         cfg.wall,
     )
@@ -64,10 +65,8 @@ def create_front(cfg):
     Front stop wall.
     """
 
-    outer_width = cfg.gps_width + 2 * cfg.wall
-
     wall = box(
-        outer_width,
+        _outer_width(cfg),
         cfg.wall,
         cfg.gps_height,
     )
