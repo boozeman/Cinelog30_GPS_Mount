@@ -43,6 +43,7 @@ def assemble(cfg):
         walls.create_front(cfg),
 
         rails.create_left(cfg),
+        
         rails.create_right(cfg),
     ]
 
