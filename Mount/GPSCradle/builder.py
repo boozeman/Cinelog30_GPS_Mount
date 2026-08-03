@@ -1,14 +1,10 @@
 ﻿"""
 GPS Cradle Builder
 
-Main assembly for the GPS cradle.
+Main assembly module.
 
-This module contains no geometry itself.
-Geometry is created in the dedicated modules:
-
-    base.py
-    walls.py
-    connector.py
+This module contains no geometry.
+Geometry is delegated to the dedicated modules.
 """
 
 from __future__ import annotations
@@ -16,26 +12,25 @@ from __future__ import annotations
 from Mount.Utils.geometry import (
     fuse_all,
     feature,
+    check,
 )
 
 from Mount.GPSCradle import base
 from Mount.GPSCradle import walls
 from Mount.GPSCradle import connector
-
-
-print("builder.py loaded")
+from Mount.GPSCradle import rails
 
 
 # --------------------------------------------------
-# Assemble
+# Assembly
 # --------------------------------------------------
 
 def assemble(cfg):
     """
-    Assemble complete GPS cradle.
+    Assemble the complete GPS cradle.
     """
 
-    print("Assembling cradle")
+    print("Assembling GPS cradle")
 
     parts = [
 
@@ -47,6 +42,8 @@ def assemble(cfg):
 
         walls.create_front(cfg),
 
+        rails.create_left(cfg),
+        rails.create_right(cfg),
     ]
 
     print(f"Fusing {len(parts)} parts")
@@ -54,30 +51,29 @@ def assemble(cfg):
     shape = fuse_all(parts)
 
     #
-    # Boolean cuts
+    # Boolean operations
     #
 
     shape = connector.cut_connector(shape, cfg)
     shape = connector.cut_cable(shape, cfg)
 
+    check(shape, "GPS Cradle")
+
     return shape
 
 
 # --------------------------------------------------
-# Builder
+# Public API
 # --------------------------------------------------
 
 def create(doc, parent, cfg):
     """
-    Create GPS cradle feature.
+    Create the GPS cradle feature.
     """
 
     print("Creating GPS cradle")
 
     shape = assemble(cfg)
-
-    print(f"Valid : {shape.isValid()}")
-    print(f"Volume: {shape.Volume:.2f}")
 
     return feature(
         doc,

@@ -5,22 +5,34 @@ These helpers wrap the FreeCAD Part API to keep the builders clean.
 """
 
 from __future__ import annotations
-from turtle import shape
 
 import FreeCAD as App
 import Part
 
-def check(shape, name):
-    print(f"{name}: valid={shape.isValid()} volume={shape.Volume}")
+
+# --------------------------------------------------
+# Debug
+# --------------------------------------------------
+
+def check(shape, name: str = "Shape"):
+    """
+    Print basic information about a shape.
+    """
+
+    valid = shape.isValid()
+
+    volume = shape.Volume if hasattr(shape, "Volume") else "N/A"
+
+    print(f"{name}: valid={valid}, volume={volume}")
+
+
+# --------------------------------------------------
+# Primitive geometry
+# --------------------------------------------------
 
 def box(x: float, y: float, z: float):
     """
-    Create a box.
-
-    Parameters
-    ----------
-    x, y, z : float
-        Dimensions in millimetres.
+    Create a rectangular box.
     """
 
     return Part.makeBox(x, y, z)
@@ -34,15 +46,23 @@ def cylinder(radius: float, height: float):
     return Part.makeCylinder(radius, height)
 
 
+# --------------------------------------------------
+# Transformations
+# --------------------------------------------------
+
 def move(shape, x=0.0, y=0.0, z=0.0):
     """
-    Move a shape.
+    Translate a shape.
     """
 
     shape.translate(App.Vector(x, y, z))
 
     return shape
 
+
+# --------------------------------------------------
+# Boolean operations
+# --------------------------------------------------
 
 def cut(base, tool):
     """
@@ -62,32 +82,38 @@ def fuse(a, b):
 
 def fuse_all(parts):
     """
-    Fuse a list of Part shapes into a single shape.
+    Fuse a list of shapes into one.
     """
 
-    if not parts:
-        raise ValueError("parts list is empty")
+    if len(parts) == 0:
+        raise ValueError("No parts supplied to fuse_all().")
 
     shape = parts[0]
 
     for part in parts[1:]:
-        shape = shape.fuse(part)
+        shape = fuse(shape, part)
 
     return shape
 
+
+# --------------------------------------------------
+# FreeCAD feature
+# --------------------------------------------------
+
 def feature(doc, parent, name: str, shape):
+    """
+    Create a Part::Feature in the document.
+    """
 
     obj = doc.addObject("Part::Feature", name)
+
+    obj.Shape = shape
 
     if parent is not None:
         parent.addObject(obj)
 
-    obj.Shape = shape
-
     doc.recompute()
 
-    print("Shape valid:", shape.isValid())
-    print("Shape volume:", shape.Volume)
-    print("Bounding box:", shape.BoundBox)
+    check(shape, name)
 
     return obj

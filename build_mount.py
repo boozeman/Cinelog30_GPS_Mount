@@ -6,18 +6,17 @@ Main build script.
 
 from __future__ import annotations
 
-import FreeCAD as App
-import dev
 import body
 import spreadsheet
 import config
 
 from Mount.GPSCradle.builder import create as create_gps_cradle
+from Reference.gps_dummy import create as create_gps_dummy
 
 
 def build():
     """
-    Build complete model.
+    Build the complete CAD model.
     """
 
     print("----------------------------------------")
@@ -40,7 +39,10 @@ def build():
     # Spreadsheet
     #
 
-    spreadsheet.create_spreadsheet(doc, cfg)
+    spreadsheet.create_spreadsheet(
+        doc,
+        cfg,
+    )
 
     #
     # GPS cradle
@@ -52,8 +54,13 @@ def build():
         cfg,
     )
 
+    create_gps_dummy(
+        doc,
+        mount,
+        cfg,
+    )
     #
-    # Final recompute
+    # Finish
     #
 
     doc.recompute()
