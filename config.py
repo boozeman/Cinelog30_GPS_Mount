@@ -14,8 +14,8 @@ class MountConfig:
     # GPS module
     # --------------------------------------------------
 
-    gps_width: float = 22.4
-    gps_length: float = 22.4
+    gps_width: float = 22.0
+    gps_length: float = 22.0
     gps_height: float = 8.2
 
     pcb_thickness: float = 0.8
@@ -49,11 +49,11 @@ class MountConfig:
 
     connector_width: float = 10.0
     connector_height: float = 6.0
-    connector_depth: float = 10.0
+    connector_depth: float = 6.0
     connector_offset: float = 0.0
     connector_from_back: float = 0.0
-    cable_hole_width: float = 8.0
-    cable_hole_height: float = 8.0
+    cable_hole_width: float = 10.0
+    cable_hole_height: float = 10.0
 
     # --------------------------------------------------
     # GoPro arm

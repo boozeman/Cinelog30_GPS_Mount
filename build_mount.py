@@ -54,11 +54,11 @@ def build():
         cfg,
     )
 
-    create_gps_dummy(
-        doc,
-        mount,
-        cfg,
-    )
+#    create_gps_dummy(
+#        doc,
+#        mount,
+#        cfg,
+#    )
     #
     # Finish
     #
