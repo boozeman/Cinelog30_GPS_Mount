@@ -1,10 +1,9 @@
 ﻿"""
 GPS Cradle Builder
 
-Main assembly module.
+Assembles the GPS cradle from the individual geometry modules.
 
-This module contains no geometry.
-Geometry is delegated to the dedicated modules.
+This module contains no geometry itself.
 """
 
 from __future__ import annotations
@@ -12,40 +11,52 @@ from __future__ import annotations
 from Mount.Utils.geometry import (
     fuse_all,
     feature,
-    check,
 )
 
-from Mount.GPSCradle import base
-from Mount.GPSCradle import walls
-from Mount.GPSCradle import connector
-from Mount.GPSCradle import rails
+from Mount.GPSCradle import (
+    base,
+    walls,
+    rails,
+    connector,
+)
 
 
 # --------------------------------------------------
-# Assembly
+# Assemble
 # --------------------------------------------------
 
 def assemble(cfg):
     """
-    Assemble the complete GPS cradle.
+    Assemble complete GPS cradle.
     """
 
-    print("Assembling GPS cradle")
+    print("Assembling cradle")
 
-    parts = [
+    parts = []
 
-        base.create(cfg),
+    #
+    # Base
+    #
 
-        walls.create_left(cfg),
+    parts.append(
+        base.create(cfg)
+    )
 
-        walls.create_right(cfg),
+    #
+    # Walls
+    #
 
-        walls.create_front(cfg),
+    parts.extend(
+        walls.create(cfg)
+    )
 
-        rails.create_left(cfg),
-        
-        rails.create_right(cfg),
-    ]
+    #
+    # Rails
+    #
+
+    parts.extend(
+        rails.create(cfg)
+    )
 
     print(f"Fusing {len(parts)} parts")
 
@@ -58,23 +69,24 @@ def assemble(cfg):
     shape = connector.cut_connector(shape, cfg)
     shape = connector.cut_cable(shape, cfg)
 
-    check(shape, "GPS Cradle")
-
     return shape
 
 
 # --------------------------------------------------
-# Public API
+# Builder
 # --------------------------------------------------
 
 def create(doc, parent, cfg):
     """
-    Create the GPS cradle feature.
+    Create GPS cradle feature.
     """
 
     print("Creating GPS cradle")
 
     shape = assemble(cfg)
+
+    print(f"Valid : {shape.isValid()}")
+    print(f"Volume: {shape.Volume:.2f}")
 
     return feature(
         doc,

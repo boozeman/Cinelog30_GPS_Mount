@@ -24,3 +24,25 @@ def create_document(name: str = "CineLog30_GPS_Mount"):
     doc.recompute()
 
     return doc, mount
+
+# --------------------------------------------------
+# FreeCAD feature
+# --------------------------------------------------
+
+def feature(doc, parent, name: str, shape):
+    """
+    Create a Part::Feature in the document.
+    """
+
+    obj = doc.addObject("Part::Feature", name)
+
+    obj.Shape = shape
+
+    if parent is not None:
+        parent.addObject(obj)
+
+    doc.recompute()
+
+    check(shape, name)
+
+    return obj

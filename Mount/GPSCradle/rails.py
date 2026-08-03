@@ -73,3 +73,10 @@ def create_right(cfg):
     )
 
     return rail
+
+def create(cfg):
+
+    return [
+        create_left(cfg),
+        create_right(cfg),
+    ]

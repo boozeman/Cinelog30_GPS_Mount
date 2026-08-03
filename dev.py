@@ -29,6 +29,8 @@ import Mount.GPSCradle.builder as cradle_builder
 
 import Mount.GoPro.builder as gopro_builder
 
+DEBUG = True
+
 def reload_all():
 
     modules = [
@@ -59,3 +61,18 @@ def build():
     reload_all()
 
     return build_mount.build()
+
+# --------------------------------------------------
+# Debug
+# --------------------------------------------------
+
+def check(shape, name="Shape"):
+
+    if not DEBUG:
+        return
+
+    print(
+        f"{name}: "
+        f"valid={shape.isValid()} "
+        f"volume={shape.Volume:.2f}"
+    )

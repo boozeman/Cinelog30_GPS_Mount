@@ -76,3 +76,11 @@ def create_front(cfg):
     )
 
     return wall
+
+def create(cfg):
+
+    return [
+        create_left(cfg),
+        create_right(cfg),
+        create_front(cfg),
+    ]

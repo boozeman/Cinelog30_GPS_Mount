@@ -11,22 +11,6 @@ import Part
 
 
 # --------------------------------------------------
-# Debug
-# --------------------------------------------------
-
-def check(shape, name: str = "Shape"):
-    """
-    Print basic information about a shape.
-    """
-
-    valid = shape.isValid()
-
-    volume = shape.Volume if hasattr(shape, "Volume") else "N/A"
-
-    print(f"{name}: valid={valid}, volume={volume}")
-
-
-# --------------------------------------------------
 # Primitive geometry
 # --------------------------------------------------
 
@@ -94,26 +78,3 @@ def fuse_all(parts):
         shape = fuse(shape, part)
 
     return shape
-
-
-# --------------------------------------------------
-# FreeCAD feature
-# --------------------------------------------------
-
-def feature(doc, parent, name: str, shape):
-    """
-    Create a Part::Feature in the document.
-    """
-
-    obj = doc.addObject("Part::Feature", name)
-
-    obj.Shape = shape
-
-    if parent is not None:
-        parent.addObject(obj)
-
-    doc.recompute()
-
-    check(shape, name)
-
-    return obj
