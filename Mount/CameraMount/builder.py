@@ -8,7 +8,17 @@ from __future__ import annotations
 
 from body import add_feature
 
-from Mount.Arm import base
+from Mount.Utils.geometry import (
+    move,
+)
+
+from Mount.CameraMount import base
+
+from Mount.CameraMount.dimensions import (
+    arm_x,
+    arm_y,
+    arm_z,
+)
 
 
 # --------------------------------------------------
@@ -20,7 +30,16 @@ def assemble(cfg):
     Assemble the support arm.
     """
 
-    return base.create(cfg)
+    shape = base.create(cfg)
+
+    move(
+        shape,
+        arm_x(cfg),
+        arm_y(cfg),
+        arm_z(cfg),
+    )
+
+    return shape
 
 
 # --------------------------------------------------

@@ -59,7 +59,13 @@ class MountConfig:
     # GoPro arm
     # --------------------------------------------------
 
-    arm_width: float = 10.0
+    arm_width: float = 12.0
+    arm_length: float = 40.0
+    arm_thickness: float = 5.0
+    arm_angle_deg: float = 12.0
+    arm_offset_x: float = 12.0
+    arm_offset_y: float = 2.0
+    arm_offset_z: float = 0
     arm_height: float = 9.0
     arm_thickness: float = 5.0
     arm_angle_deg: float = 12.0

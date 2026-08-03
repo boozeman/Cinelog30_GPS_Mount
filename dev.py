@@ -27,7 +27,7 @@ import Mount.GPSCradle.walls as walls
 import Mount.GPSCradle.connector as connector
 import Mount.GPSCradle.builder as cradle_builder
 
-import Mount.GoPro.builder as gopro_builder
+import Mount.CameraMount.builder as arm_builder
 
 DEBUG = True
 
@@ -42,7 +42,7 @@ def reload_all():
         connector,
         cradle_builder,
 
-        gopro_builder,
+        arm_builder,
 
         config,
         body,

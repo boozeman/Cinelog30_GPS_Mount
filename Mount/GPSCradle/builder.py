@@ -8,6 +8,8 @@ This module contains no geometry itself.
 
 from __future__ import annotations
 
+from body import add_feature
+
 from Mount.Utils.geometry import (
     fuse_all,
 )
@@ -87,7 +89,7 @@ def create(doc, parent, cfg):
     print(f"Valid : {shape.isValid()}")
     print(f"Volume: {shape.Volume:.2f}")
 
-    return feature(
+    return add_feature(
         doc,
         parent,
         "GPS_Cradle",
