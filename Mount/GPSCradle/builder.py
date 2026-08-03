@@ -10,7 +10,6 @@ from __future__ import annotations
 
 from Mount.Utils.geometry import (
     fuse_all,
-    feature,
 )
 
 from Mount.GPSCradle import (

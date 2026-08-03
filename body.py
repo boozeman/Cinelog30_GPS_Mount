@@ -1,5 +1,5 @@
 """
-Creates the FreeCAD document and the root App::Part.
+FreeCAD document utilities.
 """
 
 from __future__ import annotations
@@ -7,42 +7,68 @@ from __future__ import annotations
 import FreeCAD as App
 
 
-def create_document(name: str = "CineLog30_GPS_Mount"):
+# --------------------------------------------------
+# Document
+# --------------------------------------------------
+
+def create_document(name="CineLog30_GPS_Mount"):
     """
-    Create a new document and the root Part container.
+    Create a new FreeCAD document and Part container.
 
     Returns
     -------
-    tuple(App.Document, App.Part)
-        (document, root_part)
+    (doc, part)
     """
 
     doc = App.newDocument(name)
 
-    mount = doc.addObject("App::Part", "Mount")
+    part = doc.addObject(
+        "App::Part",
+        "Mount",
+    )
 
     doc.recompute()
 
-    return doc, mount
+    return doc, part
+
 
 # --------------------------------------------------
-# FreeCAD feature
+# Features
 # --------------------------------------------------
 
-def feature(doc, parent, name: str, shape):
+def add_feature(doc, parent, name, shape):
     """
-    Create a Part::Feature in the document.
+    Add a Part::Feature to the document.
+
+    Parameters
+    ----------
+    doc : App.Document
+        Active FreeCAD document.
+
+    parent : App::Part or None
+        Parent container.
+
+    name : str
+        Object name.
+
+    shape : Part.Shape
+        Shape to assign.
+
+    Returns
+    -------
+    App.DocumentObject
     """
 
-    obj = doc.addObject("Part::Feature", name)
-
-    obj.Shape = shape
+    obj = doc.addObject(
+        "Part::Feature",
+        name,
+    )
 
     if parent is not None:
         parent.addObject(obj)
 
-    doc.recompute()
+    obj.Shape = shape
 
-    check(shape, name)
+    doc.recompute()
 
     return obj

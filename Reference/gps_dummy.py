@@ -10,19 +10,30 @@ from Mount.Utils.geometry import (
     box,
     move,
     fuse_all,
-    feature,
 )
 
+from body import add_feature
+
+from Mount.GPSCradle.dimensions import (
+    gps_x,
+    gps_y,
+    gps_z,
+)
+
+
+# --------------------------------------------------
+# Shape
+# --------------------------------------------------
 
 def create_shape(cfg):
     """
     Create a simplified GPS module.
 
     PCB:
-        22 x 22 x pcb_thickness
+        gps_width × gps_length × pcb_thickness
 
     Antenna:
-        18 x 18
+        antenna_width × antenna_length
     """
 
     #
@@ -36,7 +47,7 @@ def create_shape(cfg):
     )
 
     #
-    # Antenna block
+    # Antenna
     #
 
     antenna_height = cfg.gps_height - cfg.pcb_thickness
@@ -60,6 +71,10 @@ def create_shape(cfg):
     ])
 
 
+# --------------------------------------------------
+# Builder
+# --------------------------------------------------
+
 def create(doc, parent, cfg):
     """
     Add GPS dummy into document.
@@ -73,12 +88,12 @@ def create(doc, parent, cfg):
 
     move(
         shape,
-        cfg.wall,
-        cfg.wall,
-        cfg.wall,
+        gps_x(cfg),
+        gps_y(cfg),
+        gps_z(cfg),
     )
 
-    return feature(
+    return add_feature(
         doc,
         parent,
         "GPS_Dummy",
