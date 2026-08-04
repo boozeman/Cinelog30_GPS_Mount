@@ -60,10 +60,11 @@ class MountConfig:
     # --------------------------------------------------
 
     finger_height = 10.5
+    finger_length = 12.0
 
     outer_finger_width = 3.0
     center_finger_width = 5.2
-
+    ear_gap = 3.0   
     mount_clearance = 0.20
 
     finger_hole_diameter = 2.0

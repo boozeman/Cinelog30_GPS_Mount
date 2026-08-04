@@ -36,7 +36,7 @@ def assemble(cfg):
         shape,
         mount_x(cfg),
         mount_y(cfg),
-        mount_z(cfg),
+        0.0,
     )
 
     return shape

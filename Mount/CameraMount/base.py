@@ -13,10 +13,8 @@ from Mount.Utils.geometry import (
 )
 
 from Mount.CameraMount.dimensions import (
-    bridge_width,
-    bridge_length,
-    bridge_thickness,
     finger_height,
+    finger_length,
     outer_finger_width,
     center_finger_width,
     left_finger_x,
@@ -35,35 +33,20 @@ def create(cfg):
     parts = []
 
     #
-    # Bridge
-    #
-
-    bridge = box(
-        bridge_width(cfg),
-        bridge_length(cfg),
-        bridge_thickness(cfg),
-    )
-
-    parts.append(bridge)
-
-    #
     # Common finger position
     #
 
-    finger_y = bridge_length(cfg)
+    finger_y = 0.0
 
-    finger_z = (
-        bridge_thickness(cfg)
-        - finger_height(cfg)
-    )
+    finger_z = -finger_height(cfg)
 
     #
     # Left finger
     #
 
     finger = box(
-        outer_finger_width(cfg),
-        bridge_length(cfg),
+        outer_finger_width(cfg),       
+        finger_length(cfg),
         finger_height(cfg),
     )
 
@@ -81,8 +64,8 @@ def create(cfg):
     #
 
     finger = box(
-        center_finger_width(cfg),
-        bridge_length(cfg),
+        center_finger_width(cfg),       
+        finger_length(cfg),
         finger_height(cfg),
     )
 
@@ -100,9 +83,11 @@ def create(cfg):
     #
 
     finger = box(
-        outer_finger_width(cfg),
-        bridge_length(cfg),
+        outer_finger_width(cfg),        
+        finger_length(cfg),
         finger_height(cfg),
+        
+        
     )
 
     move(
