@@ -8,8 +8,11 @@ from __future__ import annotations
 
 from Mount.Utils.geometry import (
     box,
+    cylinder,
     move,
+    rotate,
     fuse_all,
+    cut,
 )
 
 from Mount.CameraMount.dimensions import (
@@ -20,7 +23,13 @@ from Mount.CameraMount.dimensions import (
     left_finger_x,
     center_finger_x,
     right_finger_x,
+    hole_length,
+    hole_x,
+    hole_y,
+    hole_z,
+    finger_hole_diameter,
 )
+
 
 
 def create(cfg):
@@ -97,6 +106,31 @@ def create(cfg):
         finger_z,
     )
 
-    parts.append(finger)
+    parts.append(finger)  
 
-    return fuse_all(parts)
+    #
+    # Center hole
+    #
+
+
+    shape = fuse_all(parts)
+
+    hole = cylinder(
+    finger_hole_diameter(cfg) / 2,
+    hole_length(cfg),
+    axis="x",
+    )
+
+    move(
+        hole,
+        0.0,
+        hole_y(cfg),
+        hole_z(cfg),
+    )
+
+    shape = cut(
+        shape,
+        hole,
+    )
+
+    return shape

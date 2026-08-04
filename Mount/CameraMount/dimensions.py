@@ -94,3 +94,27 @@ def mount_y(cfg):
 
 def mount_z(cfg):
     return -cfg.wall
+
+
+# --------------------------------------------------
+# Hole position
+# --------------------------------------------------
+
+def hole_x(cfg):
+    return center_finger_x(cfg)
+
+def hole_y(cfg):
+    """
+    Hole center measured from the finger root.
+    """
+    return finger_hole_from_tip(cfg)
+
+
+def hole_z(cfg):
+    """
+    Hole passes through the finger center.
+    """
+    return -finger_height(cfg)
+
+def hole_length(cfg):
+    return mount_width(cfg)

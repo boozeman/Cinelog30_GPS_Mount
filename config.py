@@ -59,8 +59,8 @@ class MountConfig:
     # Camera mount
     # --------------------------------------------------
 
-    finger_height = 10.5
-    finger_length = 12.0
+    finger_height = 8.0
+    finger_length = 10.0
 
     outer_finger_width = 3.0
     center_finger_width = 5.2
