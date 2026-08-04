@@ -56,19 +56,18 @@ class MountConfig:
     cable_hole_height: float = 10.0
 
     # --------------------------------------------------
-    # GoPro arm
+    # Camera mount
     # --------------------------------------------------
 
-    arm_width: float = 12.0
-    arm_length: float = 40.0
-    arm_thickness: float = 5.0
-    arm_angle_deg: float = 12.0
-    arm_offset_x: float = 12.0
-    arm_offset_y: float = 2.0
-    arm_offset_z: float = 0
-    arm_height: float = 9.0
-    arm_thickness: float = 5.0
-    arm_angle_deg: float = 12.0
+    bridge_length: float = 5.0
+    bridge_thickness: float = 5.0 
+    finger_gap: float = 3.0
+    finger_height: float = 10.5
+    finger_hole_diameter: float = 2.0
+    finger_hole_from_tip: float = 3.2
+    outer_finger_width: float = 3.0
+    center_finger_width: float = 5.2
+    mount_clearance: float = 0.20
 
     # --------------------------------------------------
     # GoPro interface

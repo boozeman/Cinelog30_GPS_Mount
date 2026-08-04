@@ -1,25 +1,29 @@
 ﻿"""
-Support Arm Builder
+Camera Mount Builder
 
-Assembles the support arm.
+Assembles the camera mount.
 """
 
 from __future__ import annotations
 
 from body import add_feature
 
-from Mount.Utils.geometry import (
-    move,
-)
+from Mount.Utils.geometry import move
 
 from Mount.CameraMount import base
 
 from Mount.CameraMount.dimensions import (
-    arm_x,
-    arm_y,
-    arm_z,
+    mount_x,
+    mount_y,
+    mount_z,
 )
 
+from Mount.Utils.geometry import (
+    box,
+    move,
+    fuse,
+    cut,
+)
 
 # --------------------------------------------------
 # Assemble
@@ -27,16 +31,16 @@ from Mount.CameraMount.dimensions import (
 
 def assemble(cfg):
     """
-    Assemble the support arm.
+    Assemble the camera mount.
     """
 
     shape = base.create(cfg)
 
     move(
         shape,
-        arm_x(cfg),
-        arm_y(cfg),
-        arm_z(cfg),
+        mount_x(cfg),
+        mount_y(cfg),
+        mount_z(cfg),
     )
 
     return shape
@@ -48,16 +52,16 @@ def assemble(cfg):
 
 def create(doc, parent, cfg):
     """
-    Create the support arm.
+    Create the camera mount.
     """
 
-    print("Creating support arm")
+    print("Creating camera mount")
 
     shape = assemble(cfg)
 
     return add_feature(
         doc,
         parent,
-        "Support_Arm",
+        "Camera_Mount",
         shape,
     )

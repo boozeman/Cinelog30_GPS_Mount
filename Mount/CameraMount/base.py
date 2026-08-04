@@ -1,31 +1,75 @@
 ﻿"""
-Support arm base.
+Camera mount base.
 
-Creates the rectangular support arm body.
+Creates the bridge and finger blank.
+
+The three mounting fingers will be cut from the
+finger blank in later steps.
 """
 
 from __future__ import annotations
 
-from Mount.Utils.geometry import box
+from Mount.Utils.geometry import (
+    box,
+    move,
+    fuse,
+)
 
 from Mount.CameraMount.dimensions import (
-    arm_width,
-    arm_length,
-    arm_thickness,
-    
+    mount_width,
+    bridge_length,
+    bridge_thickness,
+    finger_height,
+    outer_finger_width,
+    center_finger_width,
+    finger_gap,
 )
 
 
+# --------------------------------------------------
+# Camera mount
+# --------------------------------------------------
+
 def create(cfg):
     """
-    Create the support arm body.
-
-    The arm is created at the origin. Positioning is handled
-    by the builder.
+    Create the camera mount blank.
     """
 
-    return box(
-        arm_width(cfg),
-        arm_length(cfg),
-        arm_thickness(cfg),
+    #
+    # Bridge
+    #
+
+    bridge = box(
+        mount_width(cfg),
+        bridge_length(cfg),
+        bridge_thickness(cfg),
+    )
+
+    #
+    # Finger blank
+    #
+
+    fingers = box(
+        mount_width(cfg),
+        bridge_thickness(cfg),
+        finger_height(cfg),
+    )
+
+    #
+    # Attach fingers to bridge.
+    #
+    # The bridge sits against the cradle bottom.
+    # The fingers extend downward.
+    #
+
+    move(
+        fingers,
+        0,
+        bridge_length(cfg),
+        bridge_thickness(cfg) - finger_height(cfg),
+    )
+
+    return fuse(
+        bridge,
+        fingers,
     )

@@ -12,7 +12,7 @@ import config
 
 from Mount.GPSCradle.builder import create as create_gps_cradle
 from Reference.gps_dummy import create as create_gps_dummy
-from Mount.CameraMount.builder import create as create_arm
+from Mount.CameraMount.builder import create as create_camera_mount
 
 def build():
     """
@@ -54,7 +54,7 @@ def build():
         cfg,
     )
 
-    create_arm(
+    create_camera_mount(
         doc,
         mount,
         cfg,
