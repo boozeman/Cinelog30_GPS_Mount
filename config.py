@@ -59,25 +59,15 @@ class MountConfig:
     # Camera mount
     # --------------------------------------------------
 
-    bridge_length: float = 5.0
-    bridge_thickness: float = 5.0 
-    finger_gap: float = 3.0
-    finger_height: float = 10.5
-    finger_hole_diameter: float = 2.0
-    finger_hole_from_tip: float = 3.2
-    outer_finger_width: float = 3.0
-    center_finger_width: float = 5.2
-    mount_clearance: float = 0.20
+    finger_height = 10.5
 
-    # --------------------------------------------------
-    # GoPro interface
-    # --------------------------------------------------
+    outer_finger_width = 3.0
+    center_finger_width = 5.2
 
-    gopro_hole_diameter: float = 5.30
+    mount_clearance = 0.20
 
-    finger_width: float = 8.0
-    finger_gap: float = 3.20
-    finger_thickness: float = 3.00
+    finger_hole_diameter = 2.0
+    finger_hole_from_tip = 3.2
 
     # --------------------------------------------------
     # Fillets

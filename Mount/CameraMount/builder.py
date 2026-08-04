@@ -1,5 +1,5 @@
 ﻿"""
-Camera Mount Builder
+Camera Mount Builder.
 
 Assembles the camera mount.
 """
@@ -8,7 +8,9 @@ from __future__ import annotations
 
 from body import add_feature
 
-from Mount.Utils.geometry import move
+from Mount.Utils.geometry import (
+    move,
+)
 
 from Mount.CameraMount import base
 
@@ -18,12 +20,6 @@ from Mount.CameraMount.dimensions import (
     mount_z,
 )
 
-from Mount.Utils.geometry import (
-    box,
-    move,
-    fuse,
-    cut,
-)
 
 # --------------------------------------------------
 # Assemble
@@ -31,7 +27,7 @@ from Mount.Utils.geometry import (
 
 def assemble(cfg):
     """
-    Assemble the camera mount.
+    Assemble camera mount.
     """
 
     shape = base.create(cfg)
@@ -52,7 +48,7 @@ def assemble(cfg):
 
 def create(doc, parent, cfg):
     """
-    Create the camera mount.
+    Create camera mount.
     """
 
     print("Creating camera mount")

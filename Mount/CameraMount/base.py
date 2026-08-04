@@ -1,10 +1,7 @@
 ﻿"""
 Camera mount base.
 
-Creates the bridge and finger blank.
-
-The three mounting fingers will be cut from the
-finger blank in later steps.
+Creates the bridge and three mounting fingers.
 """
 
 from __future__ import annotations
@@ -12,64 +9,109 @@ from __future__ import annotations
 from Mount.Utils.geometry import (
     box,
     move,
-    fuse,
+    fuse_all,
 )
 
 from Mount.CameraMount.dimensions import (
-    mount_width,
+    bridge_width,
     bridge_length,
     bridge_thickness,
     finger_height,
     outer_finger_width,
     center_finger_width,
-    finger_gap,
+    left_finger_x,
+    center_finger_x,
+    right_finger_x,
 )
 
 
-# --------------------------------------------------
-# Camera mount
-# --------------------------------------------------
-
 def create(cfg):
     """
-    Create the camera mount blank.
+    Create camera mount geometry.
+
+    Geometry is created at the origin.
     """
+
+    parts = []
 
     #
     # Bridge
     #
 
     bridge = box(
-        mount_width(cfg),
+        bridge_width(cfg),
         bridge_length(cfg),
         bridge_thickness(cfg),
     )
 
+    parts.append(bridge)
+
     #
-    # Finger blank
+    # Common finger position
     #
 
-    fingers = box(
-        mount_width(cfg),
-        bridge_thickness(cfg),
+    finger_y = bridge_length(cfg)
+
+    finger_z = (
+        bridge_thickness(cfg)
+        - finger_height(cfg)
+    )
+
+    #
+    # Left finger
+    #
+
+    finger = box(
+        outer_finger_width(cfg),
+        bridge_length(cfg),
         finger_height(cfg),
     )
 
+    move(
+        finger,
+        left_finger_x(cfg),
+        finger_y,
+        finger_z,
+    )
+
+    parts.append(finger)
+
     #
-    # Attach fingers to bridge.
+    # Center finger
     #
-    # The bridge sits against the cradle bottom.
-    # The fingers extend downward.
-    #
+
+    finger = box(
+        center_finger_width(cfg),
+        bridge_length(cfg),
+        finger_height(cfg),
+    )
 
     move(
-        fingers,
-        0,
-        bridge_length(cfg),
-        bridge_thickness(cfg) - finger_height(cfg),
+        finger,
+        center_finger_x(cfg),
+        finger_y,
+        finger_z,
     )
 
-    return fuse(
-        bridge,
-        fingers,
+    parts.append(finger)
+
+    #
+    # Right finger
+    #
+
+    finger = box(
+        outer_finger_width(cfg),
+        bridge_length(cfg),
+        finger_height(cfg),
     )
+
+    move(
+        finger,
+        right_finger_x(cfg),
+        finger_y,
+        finger_z,
+    )
+
+    parts.append(finger)
+
+    return fuse_all(parts)
