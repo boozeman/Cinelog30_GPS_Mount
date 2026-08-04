@@ -40,9 +40,10 @@ def finger_hole_from_tip(cfg):
 # Finger locations (local coordinates)
 # --------------------------------------------------
 
+# Finger locations are relative to the origin at the center of the mount width, and at the front of the mount (the end of the fingers).
+
 def left_finger_x(cfg):
     return 0.0
-
 
 def center_finger_x(cfg):
     return (
@@ -50,7 +51,6 @@ def center_finger_x(cfg):
         + cfg.ear_gap
         + mount_clearance(cfg)
     )
-
 
 def right_finger_x(cfg):
     return (
@@ -66,6 +66,7 @@ def right_finger_x(cfg):
 # Overall mount width
 # --------------------------------------------------
 
+# Overall mount width is the distance between the two outer fingers.
 def mount_width(cfg):
     return (
         2 * outer_finger_width(cfg)
@@ -77,21 +78,22 @@ def mount_width(cfg):
 # Mount position
 # --------------------------------------------------
 
+# Mount is centered under the cradle.
 def mount_x(cfg):
-    """
-    Center the camera mount under the cradle.
-    """
+
     return (
         outer_width(cfg)
         - mount_width(cfg)
     ) / 2
 
+# Mount is positioned at the back of the cradle.
 def mount_y(cfg):
     return (
         outer_length(cfg)
         - finger_length(cfg)
     ) / 2
 
+# Mount is positioned at the bottom of the cradle.
 def mount_z(cfg):
     return -cfg.wall
 
@@ -100,21 +102,18 @@ def mount_z(cfg):
 # Hole position
 # --------------------------------------------------
 
+# Hole is at the center of the mount width.
 def hole_x(cfg):
-    return center_finger_x(cfg)
+    return 0.0
 
+# Finger hole is at the center of the finger length.
 def hole_y(cfg):
-    """
-    Hole center measured from the finger root.
-    """
-    return finger_hole_from_tip(cfg)
+    return finger_length(cfg) / 2
 
-
+# Finger hole is at the center of the finger height.
 def hole_z(cfg):
-    """
-    Hole passes through the finger center.
-    """
-    return -finger_height(cfg)
+    return -finger_height(cfg) / 2
 
+# hole_length is the overall width of the mount, which is the distance between the two outer fingers.
 def hole_length(cfg):
     return mount_width(cfg)
