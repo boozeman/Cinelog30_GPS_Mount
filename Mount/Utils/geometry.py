@@ -158,3 +158,7 @@ def chamfer(shape, distance, edges):
         distance,
         [shape.Edges[i - 1] for i in edges],
     )
+
+def print_edges(shape):
+    for i, edge in enumerate(shape.Edges, start=1):
+        print(i, edge.BoundBox)

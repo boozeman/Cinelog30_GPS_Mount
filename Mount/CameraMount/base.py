@@ -12,6 +12,8 @@ from Mount.Utils.geometry import (
     move,
     fuse_all,
     cut,
+    print_edges,
+    fillet,
 )
 
 from Mount.CameraMount.dimensions import (
@@ -28,6 +30,7 @@ from Mount.CameraMount.dimensions import (
     hole_x,
     hole_y,
     hole_z,
+ 
 )
 
 
@@ -55,7 +58,12 @@ def create(cfg):
         finger_length(cfg),
         finger_height(cfg),
     )
-
+    # round the tip of the finger
+    finger = fillet(
+        finger,
+        1.5,
+        [11, 12],
+    )
     # Move finger to position
     move(
         finger,
@@ -73,6 +81,12 @@ def create(cfg):
         finger_length(cfg),
         finger_height(cfg),
     )
+    # round the tip of the finger
+    finger = fillet(
+        finger,
+        1.5,
+        [11, 12],
+    )
     # Move finger to position
     move(
         finger,
@@ -81,6 +95,7 @@ def create(cfg):
         finger_z,
     )
 
+    print_edges(finger)
     bb = finger.BoundBox
 
     print("Center finger BoundBox")
@@ -96,6 +111,12 @@ def create(cfg):
         outer_finger_width(cfg),
         finger_length(cfg),
         finger_height(cfg),
+    )
+    # round the tip of the finger
+    finger = fillet(
+        finger,
+        1.5,
+        [11, 12],
     )
     # Move finger to position
     move(
