@@ -30,7 +30,9 @@ class MountConfig:
     # --------------------------------------------------
 
     wall: float = 2.0
-
+    cradle_edge_radius = 1.0
+    cradle_corner_radius = 1.0
+    
     # --------------------------------------------------
     # Slide profile
     # --------------------------------------------------
@@ -69,6 +71,7 @@ class MountConfig:
 
     finger_hole_diameter = 2.0
     finger_hole_from_tip = 3.2
+    finger_tip_chamfer = 2.0
 
     # --------------------------------------------------
     # Fillets

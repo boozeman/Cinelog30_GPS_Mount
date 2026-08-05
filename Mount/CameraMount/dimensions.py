@@ -35,6 +35,8 @@ def finger_hole_diameter(cfg):
 def finger_hole_from_tip(cfg):
     return cfg.finger_hole_from_tip
 
+def finger_tip_chamfer(cfg):
+    return cfg.finger_tip_chamfer
 
 # --------------------------------------------------
 # Finger locations (local coordinates)
